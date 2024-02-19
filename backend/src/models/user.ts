@@ -1,6 +1,6 @@
 import {Schema, Model, Types, model, Document} from "mongoose";
 import bcrypt from "bcryptjs"
-import {UserDataType} from '../shared/userType'
+import {UserDataType} from '../../shared/userType'
 
 
 const userSchema = new Schema<UserDataType, Model<UserDataType>>({
@@ -16,9 +16,15 @@ const userSchema = new Schema<UserDataType, Model<UserDataType>>({
         type:String,
         required:true
     },
+    phoneNumber:{
+        type:String,
+        required:true,
+        unique:true
+    }
+    ,
     password:{type:String, required:true},
     verifyCode:{type:String, required:true},
-    verfiyCodeExpireIn:{type:Date, default: Date.now() +   10* 60 * 1000},
+    verfiyCodeExpireIn:{type:Date, default: (Date.now() + 10 * 60 * 1000)},
     isVerifyCode: {type:Boolean, default:false}, 
 },{
     timestamps:true
@@ -41,14 +47,18 @@ userSchema.post<UserDataType>('save', async function (doc,next) {
 
     const currentDate:Date = new Date(Date.now());
     const verifyDate :Date = new Date(this.verfiyCodeExpireIn.toString())
-    
+    const timeOut = 10 * 60 * 1000;
     try{
-        setTimeout(async()=>{           
-            if (this.isVerifyCode === false && verifyDate < currentDate) {
+        setTimeout(async()=>{ 
+ 
+
+            if ((this.isVerifyCode == false) ) {
+                console.log("done ")
+
                 await this.model('User').deleteOne({ _id: this._id }).exec();
                 next()
             }
-        },600000)
+        },timeOut)
      
     }catch(error:any){
          console.log(error);

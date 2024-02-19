@@ -1,6 +1,6 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request,Response, NextFunction } from "express";
-import {UserDataType} from "../shared/userType";
+import {UserDataType} from "../../shared/userType";
 
 
 
