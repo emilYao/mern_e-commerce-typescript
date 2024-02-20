@@ -1,5 +1,5 @@
 import Header from "@/components/layout/Header"
-import Register from "@/components/forms/Register";
+import Register from "@/components/forms/user/Register";
 
 type Props = {
     children:React.ReactNode;
