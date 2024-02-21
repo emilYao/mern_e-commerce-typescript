@@ -1,42 +1,69 @@
 import { UserInputType } from "@/components/forms/user/Details";
+import axios from 'axios';
 
 // const BaseUrl = import.meta.env.BaseUrl || '';
 
 export const  registerUser = async (formData:UserInputType)=>{
-    const response = await fetch(`http://localhost:9000/api/auth/register`, {
-        credentials:"include",
-        method:"POST",
+      return await axios.post(`http://localhost:9000/api/auth/register`,formData, {
+        withCredentials:true,
         headers:{
             "Content-Type":"Application/json"
         },
-        body:JSON.stringify(formData)
+    }).then((data)=>{
+        // console.log(data.data.message.json())
+        return data
+    }).catch(error=>{
+        throw error.response.data.message
     })
-    if (!response.ok){
-        throw new Error("Sorry An Error Occured");
-    }
-    return await response.json()
+
+}
+
+export const  login = async (formData:{email:string; password:string})=>{
+    return await axios.patch(`http://localhost:9000/api/auth/login`,formData, {
+      withCredentials:true,
+      headers:{
+          "Content-Type":"Application/json"
+      },
+  }).then((data)=>{
+      // console.log(data.data.message.json())
+      return data
+  }).catch(error=>{
+      throw error.response.data.message
+  })
+
 }
 
 interface verifyType{
     otp:string;
     userId: string;
 }
+export interface verifyCodeErrorType{
+    message:String;
+    wrongCode?:Boolean;
+    aboveTryLimit?:Boolean;
+    noUser?:Boolean;
+   
+}
 export const verifyPersonality = async(code:verifyType)=>{
-
-    const response = await fetch(`http://localhost:9000/api/auth/verifyPersonality`,{
-        credentials:"include",
-        method:"PATCH",
+    await axios.patch(`http://localhost:9000/api/auth/verifyPersonality`,code,{
         headers:{
             "Content-Type": "Application/json"
         },
-        body:JSON.stringify(code)
+        withCredentials:true
+    }).then((data)=>{
+        return data
+    }).catch(error=>{
+        throw error.response.data
     })
-    
-    if (!response.ok){
-        
-        throw new Error("Sorry An Error Occured");
-    }
-    return await response.json();
+}
+
+export const resendVerifyCode = async(userId:string)=>{
+    await axios.patch(`http://localhost:9000/api/auth/reSendCode`, {userId}, {
+        headers:{
+            "Content-Type": "Application/json"
+        },
+        withCredentials:true
+    })
 }
 
 

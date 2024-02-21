@@ -4,40 +4,66 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import * as apiClientUser from "../../../hooks/api-clients-user";
 import Spinner from "@/components/Spinner";
-import { useAppSelector, useAppDispatch } from '../../../app/hooks'
+import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import { AiOutlineClose } from "react-icons/ai";
+import { toast } from "react-toastify";
 
-import {
-
-  closeCreateUser,
-} from "../../../features/user/userSlice";
-import { useDispatch } from "react-redux";
+import { closeCreateUser, goToVerify } from "../../../features/user/userSlice";
 
 export default function VerifyPersonality() {
   const [otp, setOtp] = useState("");
-  const user = useAppSelector(state => state.user.user);
-  const dispatch = useDispatch();
-  
+  const user = useAppSelector((state) => state.user.user);
+  const dispatch = useAppDispatch();
+  const [wrongCode, setWrongCode] = useState<String>("");
+  const [codeResend, setCodeResend] = useState<Boolean>(false);
+
+  const { mutate: resendMutate, isPending: resendPending } = useMutation({
+    mutationFn: apiClientUser.resendVerifyCode,
+    onSuccess: () => {
+      setCodeResend(true);
+      setTimeout(() => {
+        setCodeResend(false);
+      }, 5000);
+    },
+  });
+
   const { mutate, isPending } = useMutation({
     mutationFn: apiClientUser.verifyPersonality,
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
+      dispatch(closeCreateUser());
+      toast("😃 Account created successfull");
+      dispatch(goToVerify(false));
     },
-    onError: (error) => {
-      console.log(error);
+    onError: (error: apiClientUser.verifyCodeErrorType) => {
+      if (error.noUser) {
+        dispatch(closeCreateUser());
+        dispatch(goToVerify(false));
+        toast.error(`😌 ${error.message}`);
+      } else if (error.wrongCode || error.aboveTryLimit) {
+        setWrongCode(error.message);
+
+        setTimeout(() => {
+          setWrongCode("");
+        }, 5000);
+      }
+      toast.error(`😌 ${error.message}`);
     },
   });
 
   const onSubmit = () => {
     mutate({
-      userId:user.userId as string,
+      userId: user.userId as string,
       otp,
     });
   };
-  const userNumber = user.phoneNumber.slice(9).padStart(10,"*");
+
+  const onResend = () => {
+    resendMutate(user.userId as string);
+  };
+  // const userNumber = user.phoneNumber.slice(9).padStart(10,"*");
   return (
     <div className="relative">
-            <div className="flex justify-end">
+      <div className="flex justify-end">
         <button onClick={() => dispatch(closeCreateUser())}>
           <AiOutlineClose className="cursor-pointer " />
         </button>
@@ -45,8 +71,9 @@ export default function VerifyPersonality() {
       <div className="mb-5">
         <p className="">Verify Account</p>
         <p className="text-[14px] font-normal ">
-          Hello {user.firstName}<span className="mx-1"/>
-          an OTP code has been sent to your phone Number {userNumber}
+          Hello {user.firstName}
+          <span className="mx-1" />
+          an OTP code has been sent to your email account {user.email}
         </p>
       </div>
       <p>Enter your code here</p>
@@ -57,7 +84,6 @@ export default function VerifyPersonality() {
         inputType="text"
         shouldAutoFocus={true}
         numInputs={5}
-        //   renderSeparator={<span>-</span>}
         renderInput={(props) => <input {...props} />}
         containerStyle=" flex items-center justify-center"
         inputStyle="text-slate-900 border w-[1.9rem] md:w-[2.5rem] h-[3rem] text-center  m-2 rounded-sm drop-shadow-md focus:drop-shadow-lg focus:outline-none focus:border-none"
@@ -65,13 +91,31 @@ export default function VerifyPersonality() {
       />
       <p className="font-normal">
         Didn't receive the code?{" "}
-        <button className="underline decoration-dotted hover:text-blue-500">
+        <button
+          className="underline decoration-dotted hover:text-blue-500"
+          onClick={onResend}
+        >
           Resend
         </button>
       </p>
+      <div>
+        {wrongCode && (
+          <p className="text-red-400 font-normal">😯 {wrongCode}</p>
+        )}
+        {codeResend && (
+          <p className="text-green-400 font-normal">
+            Check your mail and retry again
+          </p>
+        )}
+      </div>
+
       <div className="flex justify-end">
-        <Button className="mt-5 tracking-wider" onClick={onSubmit}>
-          {isPending ? <Spinner /> : "Verify"}
+        <Button
+          className="mt-5 tracking-wider"
+          onClick={onSubmit}
+          disabled={isPending || resendPending}
+        >
+          {isPending || resendPending ? <Spinner /> : "Verify"}
         </Button>
       </div>
     </div>

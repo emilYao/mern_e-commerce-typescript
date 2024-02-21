@@ -12,7 +12,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 
 import {useAppDispatch } from "@/app/hooks";
-import { openCreateUser } from "@/features/user/userSlice";
+import { openCreateUser, openLoginUser } from "@/features/user/userSlice";
 
 export function UserDropDown() {
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ export function UserDropDown() {
         <DropdownMenuItem onClick={() => dispatch(openCreateUser())} className="cursor-pointer text-[18px] tracking-wider">
           Register
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => navigate("/login")}  className="cursor-pointer  text-[18px] tracking-wider">
+        <DropdownMenuItem onClick={() => dispatch(openLoginUser())}  className="cursor-pointer  text-[18px] tracking-wider">
           Login
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => navigate("/edit-profile")}  className="cursor-pointer  text-[18px] tracking-wider ">

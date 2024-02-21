@@ -3,6 +3,7 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import userRoutes from "./routes/user"
 import Cors from "cors";
+import { sendMail } from "./utils/nodeMailer";
 const app = express();
 
 
@@ -26,6 +27,7 @@ mongoose.connect(process.env.DB_URL as string).then(()=>{
     console.log("connected to the database");
     app.listen(PORT, ()=>{
         console.log("your backend is up");
+      
     })
 }).catch((error)=>{
     console.log(error);

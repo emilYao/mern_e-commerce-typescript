@@ -15,7 +15,7 @@ export default function Register() {
       {
        (!closeCreateUser) &&
         (goToVerify ?<VerifyPersonality/> :  <Details/>)
-
+        
       
       }
  

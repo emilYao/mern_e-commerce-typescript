@@ -46,7 +46,7 @@ export interface UserInputType {
 
 export default function Details() {
   const dispatch = useAppDispatch();
-
+  const [formError, setFormError] = useState<String>("");
   const {
     register,
     handleSubmit,
@@ -59,11 +59,16 @@ export default function Details() {
   const { mutate, isPending } = useMutation({
     mutationFn: apiClientUser.registerUser,
     onSuccess: (data) => {
-      dispatch(addUserProfile(data.message));
-      dispatch(goToVerify());
+    
+      dispatch(addUserProfile(data.data.message));
+      dispatch(goToVerify(true));
     },
-    onError: (error) => {
-      console.log(error);
+    onError: (error :String) => {
+      setFormError(error)
+      setTimeout(()=>{
+        setFormError("")
+
+      }, 5000)
     },
   });
 
@@ -78,10 +83,16 @@ export default function Details() {
   }, [contact]);
   return (
     <form className="grid gap-5" onSubmit={handleSubmit(onSubmit)}>
+     
       <div className="flex justify-end">
         <button onClick={() => dispatch(closeCreateUser())}>
           <AiOutlineClose className="cursor-pointer " />
         </button>
+      </div>
+      <div className="text-center ">
+        {
+          formError && <p className="bg-red-400 py-2 rounded-sm text-white  ">😌{formError}</p>
+        }
       </div>
       <div className="grid gap-5 ">
         <label htmlFor="firstName">

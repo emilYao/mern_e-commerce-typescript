@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { register as userRegistration, verifyPersonality } from "../controllers/user";
+import { register as userRegistration, verifyPersonality,resendVerifyCode } from "../controllers/user";
 import { isEmail, isFirstName, isLastName, isPassword,isVerifyOTP } from "../middleware/validators";
 
 
@@ -9,6 +9,8 @@ import {check} from "express-validator"
     
 router.post("/auth/register",[isFirstName, isLastName, isEmail, isPassword],  userRegistration)
 router.patch("/auth/verifyPersonality",isVerifyOTP, verifyPersonality)
+router.patch("/auth/reSendCode", resendVerifyCode)
+
 
 
 export default router;

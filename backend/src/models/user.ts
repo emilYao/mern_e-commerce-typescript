@@ -24,10 +24,15 @@ const userSchema = new Schema<UserDataType, Model<UserDataType>>({
     ,
     password:{type:String, required:true},
     verifyCode:{type:String, required:true},
-    verfiyCodeExpireIn:{type:Date, default: (Date.now() + 10 * 60 * 1000)},
+    numberOfVerifyCode: {type:Number, default:0},
+    verfiyCodeExpireIn:Date,
     isVerifyCode: {type:Boolean, default:false}, 
 },{
     timestamps:true
+})
+
+userSchema.method("comparePassword", async function(inputPassword:string){
+    return await bcrypt.compare(inputPassword, this.password as string)  
 })
 
 userSchema.pre<UserDataType>("save", async function(next){
@@ -45,13 +50,11 @@ userSchema.pre<UserDataType>("save", async function(next){
 // delete the create document if the user does not provide the correct verification otp after 5m
 userSchema.post<UserDataType>('save', async function (doc,next) { 
 
-    const currentDate:Date = new Date(Date.now());
-    const verifyDate :Date = new Date(this.verfiyCodeExpireIn.toString())
+  
     const timeOut = 10 * 60 * 1000;
     try{
         setTimeout(async()=>{ 
  
-
             if ((this.isVerifyCode == false) ) {
                 console.log("done ")
 

@@ -10,4 +10,6 @@ export interface UserDataType extends Document {
     verifyCode: String;
     verfiyCodeExpireIn: Date;
     isVerifyCode :Boolean;
+    numberOfVerifyCode:number,
+    comparePassword:(password:String)=>Boolean;
 }
