@@ -8,7 +8,7 @@ import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import { AiOutlineClose } from "react-icons/ai";
 import { toast } from "react-toastify";
 
-import { closeCreateUser, goToVerify } from "../../../features/user/userSlice";
+import { closeCreateUser, closeLoginUser, goToVerify } from "../../../features/user/userSlice";
 
 export default function VerifyPersonality() {
   const [otp, setOtp] = useState("");
@@ -31,6 +31,7 @@ export default function VerifyPersonality() {
     mutationFn: apiClientUser.verifyPersonality,
     onSuccess: () => {
       dispatch(closeCreateUser());
+      dispatch(closeLoginUser());
       toast("😃 Account created successfull");
       dispatch(goToVerify(false));
     },
@@ -64,7 +65,7 @@ export default function VerifyPersonality() {
   return (
     <div className="relative">
       <div className="flex justify-end">
-        <button onClick={() => dispatch(closeCreateUser())}>
+        <button onClick={() => {dispatch(closeCreateUser()), dispatch(closeLoginUser())}}>
           <AiOutlineClose className="cursor-pointer " />
         </button>
       </div>

@@ -3,7 +3,7 @@ import VerifyPersonality from "./VerifyPersonality";
 import { useAppSelector } from "@/app/hooks";
 
 
-export default function Register() {
+export default function Login() {
   const goToVerify = useAppSelector(state=>state.user.goToverify);
   const closeLoginUser = useAppSelector(state=>state.user.closeLoginUser)
 

@@ -2,6 +2,7 @@ import { UserInputType } from "@/components/forms/user/Details";
 import axios from 'axios';
 
 // const BaseUrl = import.meta.env.BaseUrl || '';
+// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 
 export const  registerUser = async (formData:UserInputType)=>{
       return await axios.post(`http://localhost:9000/api/auth/register`,formData, {
@@ -25,7 +26,7 @@ export const  login = async (formData:{email:string; password:string})=>{
           "Content-Type":"Application/json"
       },
   }).then((data)=>{
-      // console.log(data.data.message.json())
+     
       return data
   }).catch(error=>{
       throw error.response.data.message

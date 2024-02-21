@@ -2,6 +2,7 @@ import Header from "@/components/layout/Header";
 import Register from "@/components/forms/user/Register";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Login from "@/components/forms/user/Login";
 type Props = {
   children: React.ReactNode;
 };
@@ -17,7 +18,7 @@ export default function Layout({ children }: Props) {
 
       </div>
       <Register />
-
+      <Login/>
       {children}
     </div>
   );

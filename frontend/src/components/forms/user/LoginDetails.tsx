@@ -15,7 +15,8 @@ import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import {
   addUserProfile,
   goToVerify,
-  closeCreateUser,
+  closeLoginUser,
+  openCreateUser
 } from "../../../features/user/userSlice";
 
 import * as apiClientUser from "../../../hooks/api-clients-user";
@@ -47,11 +48,12 @@ export default function LoginDetails() {
   const { mutate, isPending } = useMutation({
     mutationFn: apiClientUser.login,
     onSuccess: (data) => {
-    
+   
       dispatch(addUserProfile(data.data.message));
       dispatch(goToVerify(true));
     },
-    onError: (error :String) => {
+    onError: (error:string ) => {
+      
       setFormError(error)
       setTimeout(()=>{
         setFormError("")
@@ -61,6 +63,7 @@ export default function LoginDetails() {
   });
 
   const onSubmit = (data:UserLoginType) => {
+
     mutate(data);
   };
 
@@ -68,7 +71,7 @@ export default function LoginDetails() {
     <form className="grid gap-5" onSubmit={handleSubmit(onSubmit)}>
      
       <div className="flex justify-end">
-        <button onClick={() => dispatch(closeCreateUser())}>
+        <button onClick={() => dispatch(closeLoginUser())}>
           <AiOutlineClose className="cursor-pointer " />
         </button>
       </div>
@@ -112,7 +115,7 @@ export default function LoginDetails() {
       <div>
         <span>
           Don't have an account?{" "}
-          <button className="underline decoration-dotted hover:text-blue-500">
+          <button onClick={()=>{dispatch(openCreateUser()), dispatch(closeLoginUser())}} className="underline decoration-dotted hover:text-blue-500">
             Create account
           </button>
         </span>

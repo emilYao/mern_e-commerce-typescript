@@ -17,6 +17,7 @@ import {
   addUserProfile,
   goToVerify,
   closeCreateUser,
+  openLoginUser,
 } from "../../../features/user/userSlice";
 
 import * as apiClientUser from "../../../hooks/api-clients-user";
@@ -177,7 +178,7 @@ export default function Details() {
       <div>
         <span>
           Aleardy had an account?{" "}
-          <button className="underline decoration-dotted hover:text-blue-500">
+          <button onClick={()=>{dispatch(openLoginUser()), dispatch(closeCreateUser())}} className="underline decoration-dotted hover:text-blue-500">
             Login in
           </button>
         </span>

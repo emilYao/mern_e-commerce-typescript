@@ -2,8 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../app/store'
 
 
-
-
 export interface userType {
     user:{
         firstName: string;
@@ -12,7 +10,7 @@ export interface userType {
         phoneNumber:string;
         email:string;
     },
-    goToverify: boolean;
+    goToverify: Boolean;
     closeCreateUser: boolean;
     closeLoginUser:boolean;
       }
@@ -49,7 +47,7 @@ export const userSlice = createSlice({
         state.closeCreateUser = true;
       },
       openLoginUser : (state)=>{
-        state.closeLoginUser = true;
+        state.closeLoginUser = false;
         console.log(state.closeLoginUser)
       },
       closeLoginUser : (state)=>{

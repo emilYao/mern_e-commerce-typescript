@@ -120,13 +120,23 @@ export const resendVerifyCode = async (req:Request, res:Response)=>{
     }
 }
 
-export const logOut = async (req:Request, res:Response)=>{
+export const logIn = async (req:Request, res:Response)=>{
     const {password, email} = req.body;
+    const errorField = validationResult(req);
+
     try{
+        if (!errorField.isEmpty()){
+            return res.status(404).json({message:errorField})
+        }
+        
         let userExit = await User.findOne({email});
 
-        if (!userExit || !userExit?.comparePassword(password)){
-            res.status(404).json({message:"Invalid Credentials"})
+        if (!userExit){
+            return res.status(404).json({message:"Invalid Credentials"})
+        }
+        let matchPassword = await userExit?.comparePassword(password)
+        if (!matchPassword){
+            return res.status(404).json({message:"Invalid Credentials"})
         }
 
         const randomNumber = generateRandomNumber()
