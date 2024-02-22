@@ -8,7 +8,7 @@ import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import { AiOutlineClose } from "react-icons/ai";
 import { toast } from "react-toastify";
 
-import { closeCreateUser, closeLoginUser, goToVerify } from "../../../features/user/userSlice";
+import { closeCreateUser, closeLoginUser, goToVerify ,setUserLogIn} from "../../../features/user/userSlice";
 
 export default function VerifyPersonality() {
   const [otp, setOtp] = useState("");
@@ -30,9 +30,10 @@ export default function VerifyPersonality() {
   const { mutate, isPending } = useMutation({
     mutationFn: apiClientUser.verifyPersonality,
     onSuccess: () => {
+      dispatch(setUserLogIn(true))
       dispatch(closeCreateUser());
       dispatch(closeLoginUser());
-      toast("😃 Account created successfull");
+      toast("😃 You are welcome ");
       dispatch(goToVerify(false));
     },
     onError: (error: apiClientUser.verifyCodeErrorType) => {
@@ -47,7 +48,7 @@ export default function VerifyPersonality() {
           setWrongCode("");
         }, 5000);
       }
-      toast.error(`😌 ${error.message}`);
+      // toast.error(`😌 ${error.message}`);
     },
   });
 

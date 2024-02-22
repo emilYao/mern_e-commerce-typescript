@@ -34,6 +34,21 @@ export const  login = async (formData:{email:string; password:string})=>{
 
 }
 
+export const  logout = async ()=>{
+    return await axios.post(`http://localhost:9000/api/auth/logout`, {
+      withCredentials:true,
+      headers:{
+          "Content-Type":"Application/json"
+      },
+  }).then(()=>{
+    return "logout successful"
+  }).catch(error=>{
+    
+      throw error.response.data.message
+  })
+
+}
+
 interface verifyType{
     otp:string;
     userId: string;

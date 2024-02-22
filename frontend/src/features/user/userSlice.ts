@@ -13,9 +13,10 @@ export interface userType {
     goToverify: Boolean;
     closeCreateUser: boolean;
     closeLoginUser:boolean;
+    userLogIn :boolean;
       }
 
-const initialState :userType= {
+const initialState = {
 user:{
     firstName: "",
     lastName: "",
@@ -25,8 +26,9 @@ user:{
 },
 goToverify: false,
 closeCreateUser: true,
-closeLoginUser:true
-} 
+closeLoginUser:true,
+userLogIn: false,
+} as userType
     
 export const userSlice = createSlice({
     name: 'user',
@@ -52,11 +54,14 @@ export const userSlice = createSlice({
       },
       closeLoginUser : (state)=>{
         state.closeLoginUser = true;
+      },
+      setUserLogIn: (state,action:PayloadAction<boolean>)=>{
+        state.userLogIn = action.payload;
       }
     }
   })    
 
-export const { addUserProfile,goToVerify, openCreateUser,closeCreateUser, closeLoginUser, openLoginUser } = userSlice.actions
+export const { addUserProfile,goToVerify, openCreateUser,closeCreateUser, setUserLogIn,closeLoginUser, openLoginUser } = userSlice.actions
 
 
 export const selectCount = (state: RootState) => state.user

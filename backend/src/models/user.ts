@@ -47,11 +47,11 @@ userSchema.pre<UserDataType>("save", async function(next){
     }      
 })
 
-// delete the create document if the user does not provide the correct verification otp after 5m
+// delete the create document if the user does not provide the correct verification otp after a day
 userSchema.post<UserDataType>('save', async function (doc,next) { 
 
   
-    const timeOut = 10 * 60 * 1000;
+    const timeOut = 24 * 60 * 60 * 1000;
     try{
         setTimeout(async()=>{ 
  
