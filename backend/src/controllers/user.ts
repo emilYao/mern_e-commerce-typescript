@@ -5,10 +5,11 @@ import jwt from "jsonwebtoken"
 import { asignToken } from "../middleware/JWTtoken";
 import { sendMail } from "../utils/nodeMailer";
 import { generateRandomNumber } from "../utils/generateRandomNumber";
-import { UserDataType } from "../../shared/userType";
+import { UserDataType } from "../../shared/Type";
+import { resolve } from "path/win32";
 
 export const register= async (req:Request, res:Response)=>{
-    const {firstName, lastName, email, password,phoneNumber} = req.body;
+    const {firstName, lastName, email, password,phoneNumber, role} = req.body;
     const errorField = validationResult(req);
     try{
         if (!errorField.isEmpty()){
@@ -21,6 +22,11 @@ export const register= async (req:Request, res:Response)=>{
             return res.status(404).json({message:"User already exit"})
         }
 
+        const adminExit = await User.find({role})
+        
+        if (role =="Admin" && adminExit.length > 1){
+            return res.status(404).json({message:"Unauthorized Operation !"})
+        }
         const randomNumber = generateRandomNumber()
        
         

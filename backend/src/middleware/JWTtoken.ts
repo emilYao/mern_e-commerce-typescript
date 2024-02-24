@@ -1,6 +1,6 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request,Response, NextFunction } from "express";
-import {UserDataType} from "../../shared/userType";
+import {UserDataType} from "../../shared/Type";
 
 
 
@@ -21,15 +21,16 @@ export const asignToken = (newUser:UserDataType, secret:string)=>{
 }
 
 
-export const compareToken = (secret:string)=>(req:Request, res:Response, next:NextFunction)=>{
+export const verifyToken = ()=>(req:Request, res:Response, next:NextFunction)=>{
     const token = req.cookies["auth_token"];
     if (!token){
         return res.status(404).json({message:"unAuthorized"});
     }
 
     try{
-        const payload = jwt.verify(token,secret);
+        const payload = jwt.verify(token,process.env.USER_SECRET as string);
         req.userId = (payload as JwtPayload).userId;
+        next()
     }catch(e:any){
         console.log(e);
         return res.status(404).json({message:"unAuthorized"})

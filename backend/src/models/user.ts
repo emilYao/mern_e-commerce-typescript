@@ -1,7 +1,8 @@
 import {Schema, Model, Types, model, Document} from "mongoose";
 import bcrypt from "bcryptjs"
-import {UserDataType} from '../../shared/userType'
+import {UserDataType} from '../../shared/Type'
 
+const role = ["Admin", "Customer"]
 
 const userSchema = new Schema<UserDataType, Model<UserDataType>>({
     firstName: {
@@ -20,6 +21,10 @@ const userSchema = new Schema<UserDataType, Model<UserDataType>>({
         type:String,
         required:true,
         unique:true
+    },
+    role:{
+        type:String,
+        enum: role
     }
     ,
     password:{type:String, required:true},

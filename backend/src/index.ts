@@ -5,13 +5,20 @@ import userRoutes from "./routes/user"
 import Cors from "cors";
 import { sendMail } from "./utils/nodeMailer";
 const app = express();
-
+import {v2 as cloudinary} from "cloudinary";
 
 app.use(Cors({origin: process.env.FRONTEND_URL, credentials:true}));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 const PORT = process.env.NODE_ENV === "production" ? process.env.PORT as String : 9000;
+
+cloudinary.config({
+    secure: true,
+    cloud_name:process.env.CLOUD_NAME,
+    api_key:process.env.API_KEY,
+    api_secret:process.env.API_SECRET
+  });
 
 // define routes
 app.use("/api", userRoutes);

@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Link, useNavigate } from "react-router-dom";
-import * as apiClient from "../hooks/api-clients-user"
+import * as apiClient from "../api/api-clients-user"
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { openCreateUser, openLoginUser, setUserLogIn } from "@/features/user/userSlice";
 import { useMutation } from "@tanstack/react-query";

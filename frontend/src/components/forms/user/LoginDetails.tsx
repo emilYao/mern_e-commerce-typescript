@@ -19,7 +19,7 @@ import {
   openCreateUser
 } from "../../../features/user/userSlice";
 
-import * as apiClientUser from "../../../hooks/api-clients-user";
+import * as apiClientUser from "../../../api/api-clients-user";
 import Spinner from "../../Spinner";
 const UserSchema = yup
   .object({

@@ -2,7 +2,7 @@ import OtpInput from "react-otp-input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
-import * as apiClientUser from "../../../hooks/api-clients-user";
+import * as apiClientUser from "../../../api/api-clients-user";
 import Spinner from "@/components/Spinner";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import { AiOutlineClose } from "react-icons/ai";

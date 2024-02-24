@@ -20,7 +20,7 @@ import {
   openLoginUser,
 } from "../../../features/user/userSlice";
 
-import * as apiClientUser from "../../../hooks/api-clients-user";
+import * as apiClientUser from "../../../api/api-clients-user";
 import Spinner from "../../Spinner";
 const UserSchema = yup
   .object({
@@ -28,6 +28,7 @@ const UserSchema = yup
     lastName: yup.string().required(),
     email: yup.string().email().required(),
     password: yup.string().min(8).required(),
+    role: yup.string().required(),
     phoneNumber: yup.string().required(),
     confirmPassword: yup
       .string()
@@ -36,11 +37,13 @@ const UserSchema = yup
   })
   .required();
 
+
 export interface UserInputType {
   firstName: String;
   lastName: String;
   email: String;
-  password: String;
+  password: number;
+  role: "Customer" | "Admin";
   phoneNumber: String;
   confirmPassword?: String;
 }
@@ -170,6 +173,8 @@ export default function Details() {
 
       <Button
         type="submit"
+
+    onClick={()=>setValue("role", "Customer")}
         disabled={!(contact && isPossiblePhoneNumber(contact))}
         className="relative"
       >

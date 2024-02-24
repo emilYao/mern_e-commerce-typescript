@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button"
 import './App.css'
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Layout from "./layout/Layout";
+import DashboardLayout from "./layout/admin/DashboardLayout";
+import AddProduct from "./components/pages/admin/AddProduct";
 function App() {
 
   return (
@@ -9,6 +11,11 @@ function App() {
     <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<Layout><span></span></Layout>}/>
+
+        {/* don't forget to make it protected route */}
+        <Route path="/admin-dasboard" element={<DashboardLayout/>}>
+          <Route path="add-product" element={<AddProduct/>}/>
+        </Route>
       </Routes>
     </BrowserRouter>
   </>
