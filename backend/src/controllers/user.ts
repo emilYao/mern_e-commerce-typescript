@@ -43,7 +43,8 @@ export const register= async (req:Request, res:Response)=>{
             firstName: newUser.firstName,
             lastName: newUser.lastName,
             phoneNumber: newUser.phoneNumber,
-            email: newUser.email
+            email: newUser.email,
+            role:newUser.role
         }
         
         return res.status(200).json({message: user})
@@ -86,7 +87,8 @@ export const logIn = async (req:Request, res:Response)=>{
                 firstName: userExit.firstName,
                 lastName: userExit.lastName,
                 phoneNumber: userExit.phoneNumber,
-                email: userExit.email
+                email: userExit.email,
+                role:userExit.role
             }
         }
              
@@ -158,7 +160,9 @@ export const verifyPersonality = async (req:Request, res:Response)=>{
             userId: userExit._id,
             firstName: userExit.firstName,
             lastName: userExit.lastName,
-            phoneNumber: userExit.phoneNumber
+            phoneNumber: userExit.phoneNumber,
+            email: userExit.email,
+            role:userExit.role
         }
     //change isVerifyCode to true
     return res.send({message:user})
