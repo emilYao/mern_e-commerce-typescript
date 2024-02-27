@@ -9,10 +9,11 @@ import { upLoadFile } from "../middleware/fileUploader";
 const router = Router()
 
 
+
 router.post("/addProduct", [isProdcutName, isDescription, isPrice, isCategory, isBrand, isStockQuantity],
+upLoadFile,
 verifyToken,
-upLoadFile
-,
 addProduct
 )
 
+export default router;

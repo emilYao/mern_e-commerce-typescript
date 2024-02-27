@@ -7,8 +7,8 @@ type props = {
 };
 export default function DashboardLayout() {
   return (
-    <div className="relative  min-h-screen grid grid-cols-12">
-      <div className="col-span-2 flex  flex-col md:p-5 md:gap-[3rem] md:text-lg text-white hero-bg">
+    <div className="relative  min-h-screen grid grid-cols-12 ">
+      <div className="col-span-2 hero-bg">
       <SideBar />
 
       </div>

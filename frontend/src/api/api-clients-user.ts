@@ -20,7 +20,7 @@ export const  registerUser = async (formData:UserInputType)=>{
 }
 
 export const  login = async (formData:{email:string; password:string})=>{
-    return await axios.patch(`http://localhost:9000/api/auth/login`,formData, {
+    return await axios.patch(`http://localhost:9000/api/user/auth/login`,formData, {
       withCredentials:true,
       headers:{
           "Content-Type":"Application/json"
@@ -35,7 +35,7 @@ export const  login = async (formData:{email:string; password:string})=>{
 }
 
 export const  logout = async ()=>{
-    return await axios.post(`http://localhost:9000/api/auth/logout`, {
+    return await axios.post(`http://localhost:9000/api/user/auth/logout`, {
       withCredentials:true,
       headers:{
           "Content-Type":"Application/json"
@@ -61,7 +61,7 @@ export interface verifyCodeErrorType{
    
 }
 export const verifyPersonality = async(code:verifyType)=>{
-    await axios.patch(`http://localhost:9000/api/auth/verifyPersonality`,code,{
+    await axios.patch(`http://localhost:9000/api/user/auth/verifyPersonality`,code,{
         headers:{
             "Content-Type": "Application/json"
         },
@@ -74,7 +74,7 @@ export const verifyPersonality = async(code:verifyType)=>{
 }
 
 export const resendVerifyCode = async(userId:string)=>{
-    await axios.patch(`http://localhost:9000/api/auth/reSendCode`, {userId}, {
+    await axios.patch(`http://localhost:9000/api/user/auth/reSendCode`, {userId}, {
         headers:{
             "Content-Type": "Application/json"
         },

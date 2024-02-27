@@ -13,6 +13,13 @@ export default function ProductImage() {
     formState: { errors },
   } = useFormContext<ProductInputType>();
 
+  register("images",{
+    validate: {    
+      less : (image)=>( image.length ) > 0 || "At least one image is required",
+      greater: (image)=>( image.length) < 5 || "Total number of images can't be more than 5"
+    },
+    
+  })
   const onDelete = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     url: string
@@ -22,8 +29,13 @@ export default function ProductImage() {
         return url !== imageUrl
     })
     setImages(newImage)
-    setValue("images", newImage)
   }
+
+  useEffect(()=>{
+    setValue("images", images)
+    setValue("imageFile", null)
+  }, [images])
+
   const exitingImage = watch("imageFile");
 
   useEffect(() => {
@@ -47,37 +59,26 @@ export default function ProductImage() {
       }
     }
    setValue("images", images)
-   console.log(images)
+   
   },[exitingImage]);
 
   
   return (
     <div>
-     
+     <p>Add product image</p>
       <input
         type="file"
         multiple
         accept="image/*"
-        {...register("imageFile", {
-          validate: (imageFile) => {
-            console.log(imageFile);
-            const totalLength = imageFile.length + exitingImage.length;
-            if (totalLength < 1) {
-              return "At least one image is required";
-            }
-
-            if (totalLength > 5) {
-              return "Total number of images can't be more than 5";
-            }
-            return true;
-          },
-        })}
+        {...register("imageFile")}
       />
-      <div className="md:h-[15rem] border p-5 mt-2 rounded flex gap-5 justify-start items-center">
+      <p className="text-red-400">{errors.images?.message}</p>
+
+      <div className="md:min-h-[15rem] border p-5 mt-2 rounded flex flex-wrap gap-5 justify-start items-center">
       {
-        exitingImage && images.map((url, key)=>{
+        images && images.map((url, key)=>{
             return (
-                <div key={key} className="md:h-[12rem] group md:w-[10rem] hover:scale-105 relative flex-wrap">
+                <div key={key} className="md:h-[12rem] group md:w-[10rem] hover:scale-105 relative ">
                 <div className="md:h-[12rem] md:w-[10rem] group-hover:z-[10] absolute flex justify-center items-center top-0 left-0 bg-slate-900 opacity-[0.7] -z-10">
                     <button type="button" className="text-white z-[20] block " onClick={(event)=>onDelete(event, url)}>Delete</button>
                 </div>
@@ -88,7 +89,6 @@ export default function ProductImage() {
         })
       }
       </div>
-      <p className="text-red-400">{errors.imageFile?.message}</p>
 
          
     </div>

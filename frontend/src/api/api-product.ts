@@ -1,14 +1,13 @@
-import { ProductInputType } from "@/components/forms/addProduct/ProductDetails";
+import { ProductInputType } from "@/components/pages/admin/AddProduct";
 import axios from "axios";
 
 const BASE_URL = "http://localhost:9000"
 
-export const  addProduct = async (formData:ProductInputType)=>{
-    return await axios.post(`${BASE_URL}/api/auth/register`,formData, {
+export const  addProduct = async (formData:FormData)=>{
+    
+    return await axios.post(`http://localhost:9000/api/product/addProduct`,formData, {
       withCredentials:true,
-      headers:{
-          "Content-Type":"Application/json"
-      },
+method:"POST"
   }).then((data)=>{
       // console.log(data.data.message.json())
       return data

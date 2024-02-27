@@ -8,6 +8,7 @@ import Product from "../models/product";
 
 export const addProduct =async (req:Request, res:Response)=>{
     console.log(req.file)
+    console.log(req.body)
     try{
         const isAdmin = await User.findOne({_id: req.userId,role: "Admin" })
 
