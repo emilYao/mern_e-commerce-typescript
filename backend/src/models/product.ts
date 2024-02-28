@@ -1,19 +1,33 @@
 import {model, Schema} from "mongoose"
 import { ProductDataType } from "../../shared/Type"
 
-const categoryValues=["shoe","bag","CuffLink","fabric"]
+const categoryValues=["shoe","bag","cufflink","fabric"]
 
 const productSchema = new Schema<ProductDataType>({
-    name:String,
-    description:String,
-    price:Number,
+    name:{
+        type:String,
+        required:true
+    },
+    description:{
+        type:String,
+        required:true
+    },
+    price:{
+        type:Number,
+        required:true
+    },
     category:{
         type:String,
         enum:categoryValues
     },
     brand:String,
-    stockQuantity:Number,
+    stockQuantity:{
+        type:Number,
+        required:true,
+        default:0
+    },
     images:[String],
+    videos:[String],
     rating:{
         type:Number,
         default:0

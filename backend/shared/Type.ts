@@ -26,10 +26,11 @@ export interface ProductDataType extends Document{
     name: string;
     description: string;
     price: number;
-    category: categoryValues;
+    category: "shoe"| "bag"|"cufflink"|"fabric";
     brand: string;
     stockQuantity: number;
     images: string[];
+    videos:string[];
     rating:number;
     // shippingInfo:
 

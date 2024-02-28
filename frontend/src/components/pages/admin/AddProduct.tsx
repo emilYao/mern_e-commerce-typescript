@@ -39,7 +39,7 @@ export default function AddProduct() {
 
   const onSubmit = (data: ProductInputType)=>{
     const formData = new FormData();
-  
+    
     formData.append("name", data.name)
     formData.append("description", data.description)
     formData.append("price", data.price?.toString())
@@ -47,6 +47,7 @@ export default function AddProduct() {
     formData.append("brand", data.brand)
     formData.append("stockQuantity", data.stockQuantity?.toString())
     formData.append("rating", data.rating?.toString())
+    console.log(formData)
   
     data.images.forEach((value) => {
       formData.append("images", value);
@@ -54,8 +55,7 @@ export default function AddProduct() {
     data.video.forEach((value)=>{
       formData.append("videos", value);
     })
-    console.log("dkfdjf")
-    console.log(formData)
+
    mutate(formData)
 
   }
@@ -65,12 +65,12 @@ export default function AddProduct() {
             Add Product
         </div>
       <FormProvider {...methods}>
-        <form onSubmit={(event)=>{methods.handleSubmit(onSubmit)}} encType="multipart/form-data" >
+        <form onSubmit={methods.handleSubmit(onSubmit)} encType="multipart/form-data" >
           <ProductDetails />
 
           <ProductImage/>
           <ProductShortClip/>
-          <Button type="submit">Add Product</Button>
+          <Button type="submit" >Add Product</Button>
         </form>
       </FormProvider>
     </div>

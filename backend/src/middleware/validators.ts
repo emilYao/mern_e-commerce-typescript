@@ -10,8 +10,8 @@ export const isVerifyOTP = check("otp").trim().isString().isLength({max:5, min:5
 
 export const isProdcutName = check("name").trim().isString().notEmpty();
 export const isDescription = check("description").trim().isString().notEmpty();
-export const isPrice = check("price").trim().isDecimal().notEmpty();
+export const isPrice = check("price").trim().isString().notEmpty();
 export const isCategory = check("category").trim().isString().notEmpty();
 export const isBrand = check("brand").trim().isString();
-export const isStockQuantity = check("stockQuantity").isNumeric();
+export const isStockQuantity = check("stockQuantity").isString();
 

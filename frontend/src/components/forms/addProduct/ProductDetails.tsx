@@ -26,7 +26,7 @@ export default function ProductDetails() {
 
   return (
     <div className="grid gap-5">
-      <label htmlFor="productName">
+      <label htmlFor="name">
         Product Name:
         <Input
           type="text"
@@ -59,7 +59,7 @@ export default function ProductDetails() {
             className="focus-visible:ring-slate-600 focus-visible:ring-1 focus:outline-none focus:border-0"
             {...register("price", { required: "Price field is required" })}
           />
-          <p className="text-red-400">{errors.description?.message}</p>
+          <p className="text-red-400">{errors.price?.message}</p>
         </label>
 
       <label>
@@ -80,7 +80,7 @@ export default function ProductDetails() {
          
         </label>
 
-      <label htmlFor="price" className="col-span-4">
+      <label htmlFor="brand" className="col-span-4">
           Brand
           <Input
             id="brand"
@@ -91,18 +91,18 @@ export default function ProductDetails() {
           <p className="text-red-400">{errors.brand?.message}</p>
         </label>
 
-        <label htmlFor="price" className="col-span-4">
+        <label htmlFor="stockQuantity" className="col-span-4">
           Stock Quantity
           <Input
-            id="brand"
+            id="stockQuantity"
             type="number"
             className="focus-visible:ring-slate-600 focus-visible:ring-1 focus:outline-none focus:border-0"
-            {...register("brand", { required: "Stock quantity field is required" })}
+            {...register("stockQuantity", { required: "Stock quantity field is required" })}
           />
-          <p className="text-red-400">{errors.brand?.message}</p>
+          <p className="text-red-400">{errors.stockQuantity?.message}</p>
         </label>
         
-        <label htmlFor="price" className="col-span-4">
+        <label htmlFor="rating" className="col-span-4">
           Rating
           <Input
             id="rating"
