@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import './App.css'
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import Layout from "./layout/Layout";
+import Layout from "./layout/products/Layout";
 import DashboardLayout from "./layout/admin/DashboardLayout";
 import AddProduct from "./components/pages/admin/AddProduct";
 function App() {

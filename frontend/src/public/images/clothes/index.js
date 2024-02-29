@@ -1,0 +1,1 @@
+export {default as clothe_28} from "./clothe_28.jpeg";
