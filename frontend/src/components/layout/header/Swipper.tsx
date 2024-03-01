@@ -15,7 +15,6 @@ register();
 
 
 export default function Swipper() {
-    const swiperElRef = useRef<any>(null);
 
   return (
 

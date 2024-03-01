@@ -487,38 +487,47 @@ export const dress = [
 
 ]
 
-export const footerAPI = {
-    titles: [ {title: "About Falcon"},{title: "Get Help"},{title: "Company"} ],
-    links: [
-      [
-        {link: "News"},
-        {link: "Careers"},
-        {link: "Investors"},
-        {link: "Prupose"},
-        {link: "Sustainability"},
-      ],
-      [
-        {link: "Order Status"},
-        {link: "Shipping & Delivery"},
-        {link: "Payment Options"},
-        {link: "Gift Card Balance"},
-        {link: "Contact Us"},
-        {link: "FAQ"},
-        {link: "Blog"},
-      ],
-      [
-        {link: "Gift Cards"},
-        {link: "Promotions"},
-        {link: "Find A Store"},
-        {link: "Signup"},
-        {link: "Fabric Jouneral"},
-        {link: "Cuff link Jouneral"},
-        {link: "Bag Jouneral"},
-        {link: "Send Us Feeback"},
-        
-      ],
+export const footerAPI = [
+  {
+    title:"About Falcon",
+    links:[
+      "News",
+      "Careers",
+      "Investors",
+      "Prupose",
+      "Sustainability",
     ]
-  };
+  },
+  {
+    title:"Get Help",
+    links:      [
+      "Order Status",
+      "Shipping & Delivery",
+      "Payment Options",
+      "Gift Card Balance",
+      "Contact Us",
+      "FAQ",
+      "Blog",
+    ]
+  }
+  ,
+  {
+    title:"Company",
+    links:      [
+      "Gift Cards",
+      "Promotions",
+      "Find A Store",
+      "Signup",
+      "Fabric Jouneral",
+      "Cuff link Jouneral",
+      "Bag Jouneral",
+      "Send Us Feeback",
+      
+    ]
+  }
+]  
+     
+
 
 
 export const headerNavAPI = [

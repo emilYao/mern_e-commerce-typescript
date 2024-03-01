@@ -5,8 +5,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import Login from "@/components/forms/user/Login";
 import Swipper from "@/components/layout/header/Swipper";
 import { Heroswipper } from "@/components/layout/header/Heroswipper";
-import {clip} from "@/data/data";
+import {clip, footerAPI} from "@/data/data";
 import VideoClip from "@/components/layout/header/VideoClip";
+import Category from "@/components/layout/categories/Category";
+import Sales from "@/components/layout/sales/Sales";
+import Footer from "@/components/layout/footer/Footer";
 
 type Props = {
   children: React.ReactNode;
@@ -22,10 +25,6 @@ export default function Layout({ children }: Props) {
         <div className='absolute top-0 left-0 w-[100%] h-[100%] bg-slate-900 -z-[5] opacity-[0.4]'></div>
 
         <Heroswipper/>
-
-
-
-
       </div>
 
       <ToastContainer position="top-center" className="z-100"/>
@@ -43,6 +42,12 @@ export default function Layout({ children }: Props) {
 
       <Register />
       <Login/>
+
+
+      <Category/>
+      
+      <Sales/>
+      <Footer value={footerAPI}/>
       {children}
     </div>
   );
