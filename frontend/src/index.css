@@ -233,11 +233,15 @@
 
   /*-------------------end of spinner-------------*/
 
-/*------------------------hero swipper --------------------*/
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  html {
+    overflow: -moz-scrollbars-none;
+  }
 
 
-
-/***-------------------------------end of hero swipper------------------*/
 
 }
 

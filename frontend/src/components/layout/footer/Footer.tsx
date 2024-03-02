@@ -11,7 +11,7 @@ interface props {
 }
 const Footer = ({ value }: props) => {
   return (
-    <div className="max-w-screen mt-[5rem] bg-slate-100 text-slate-100 ">
+    <div className="max-w-screen mt-[2rem] bg-slate-100 text-slate-100 ">
       <div className="  container textFont w-screen  md:w-[70%] xl:w-[50%] 3xl:w-[40%] md:mx-auto ">
         <div className="flex justify-between  pb-[1rem]">
           {value.map((item, index) => {

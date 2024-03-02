@@ -4,12 +4,13 @@ import { EffectCreative } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-creative";
 import TruncateMarkup from "react-truncate-markup";
-
+import { useNavigate } from "react-router-dom";
 interface props {
   items: productReturnType[];
 }
 
 export default function Product({ items }: props) {
+  
   return (
     <div>
       <Swiper

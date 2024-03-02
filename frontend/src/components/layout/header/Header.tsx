@@ -1,18 +1,20 @@
 import { ModeToggle } from "@/components/mode-toggle";
 import logo from "@/public/image/logo.png";
 import { FaRegHeart } from "react-icons/fa";
-import { BsCart4, BsPersonCircle } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { BsCart4 } from "react-icons/bs";
+import { Link, useLocation } from "react-router-dom";
 import { UserDropDown } from "../../UserDropDown";
-import { Input } from "../../ui/input";
 import Productnav from "./Productnav";
-import Swipper from "./Swipper";
 import SearchInput from "./SearchInput";
+import { useEffect, useState } from "react";
+
 type Props = {};
 
 export default function Header({}: Props) {
+  const location = useLocation().pathname;
+
   return (
-    <div className="container z-[110] md:px-[2rem]  grid gap-1 3xl:px-[20rem]   3xl:py-5 ">
+    <div className="container  z-[110] md:px-[2rem]  grid gap-1 3xl:px-[20rem]   3xl:py-5 ">
       <div className="container  md:px-[2rem]  3xl:px-[20rem] py-[0.5rem] 3xl:py-5  flex justify-between items-center ">
         <div>
           <Link to="/">
@@ -23,9 +25,14 @@ export default function Header({}: Props) {
             />
           </Link>
         </div>
-        <div className="md:block grow md:mx-[4rem] hidden">
-          <SearchInput/>
+        <div>
+          {location === "/" && (
+            <div className="md:block grow md:mx-[4rem] hidden w-full">
+              <SearchInput />
+            </div>
+          )}
         </div>
+
         <div className="flex gap-10 3xl:gap-[10rem]">
           <div className="flex gap-3 3xl:gap-[5rem] items-center ">
             <FaRegHeart
@@ -45,13 +52,17 @@ export default function Header({}: Props) {
           </div>
         </div>
       </div>
-        <div className="md:hidden block">
-          <SearchInput/>
-        </div>
-      <div className="">
-        <Productnav />
-      </div>
-            
+
+      {location === "/" && (
+        <>
+          <div className="md:hidden block">
+            <SearchInput />
+          </div>
+          <div className="">
+            <Productnav />
+          </div>
+        </>
+      )}
     </div>
-  ); 
+  );
 }

@@ -8,12 +8,14 @@ import TruncateMarkup from "react-truncate-markup";
 
 import { Grid, Pagination } from "swiper/modules";
 import { productReturnType } from "@/types/type";
+import { useNavigate } from "react-router-dom";
 
 interface props{
     title:string,
     items:productReturnType[]
 }
 export default function Product({title, items}:props) {
+  const navigate = useNavigate()
   return (
     <div className="bg-white  drop-shadow-[5px_5px_5px_rgba(0,0,0,0.2)] h-[17rem] md:h-[22rem] xl:h-[25rem] 3xl:h-[38rem] 3xl:w-[70%] xl:w-[80%] mx-[auto]">
       <p className="font-bold text-slate-600 py-1 px-[1rem] 3xl:text-[2rem] xl:py-[1rem] xl:ml-[8rem] 3xl:ml-[14rem]">{title}</p>
@@ -34,7 +36,9 @@ export default function Product({title, items}:props) {
       >
                {items.map((item, index) => {
           return (
-            <SwiperSlide key={index} className="grid gap-0 px-[3px] md:px-[16px] xl:px-[4rem] grid-rows-12 bg-white hover:scale-105 cursor-pointer h-[100%]  text-center   ">
+            <SwiperSlide key={index} onClick={()=>navigate(`product/${item.id}`,{
+              state:item
+            })} className="grid gap-0  px-[3px] md:px-[16px] xl:px-[4rem] grid-rows-12 bg-white hover:scale-105 cursor-pointer h-[100%]  text-center   ">
               <div className="row-span-8 w-[100%] h-[100%] relative">
                 <img
                   src={item.images[0]}
