@@ -10,7 +10,7 @@ interface props {
 }
 
 export default function Product({ items }: props) {
-  
+    const navigate = useNavigate();
   return (
     <div>
       <Swiper
@@ -36,7 +36,7 @@ export default function Product({ items }: props) {
       >
         {items.map((item, index) => {
           return (
-            <SwiperSlide key={index} className="grid gap-0  grid-rows-12 bg-white hover:scale-105 cursor-pointer h-[100%] ">
+            <SwiperSlide key={index} className="grid gap-0  grid-rows-12 bg-white hover:scale-105 cursor-pointer h-[100%] " onClick={()=>navigate(`product/${item.category}`)}>
               <div className="row-span-8 w-[100%] h-[80%] relative">
                 <img
                   src={item.images[0]}

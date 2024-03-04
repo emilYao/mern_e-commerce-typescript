@@ -25,9 +25,7 @@ import {
 import { dressA1, dressA2, dressA3, dressA4, dressA5, dressA6,
     dressB1, dressB2, dressB3, dressB4,dressB5, dress0, dress1, dress2, dress3,dress4,dress5,
     dressC1, dressC2, dressC3,dressC4, dressC5, dressC6,
-    dressD1,dressD2, dressD3, dressD4
-
-} from "@/public/images/dress";
+    dressD1,dressD2, dressD3, dressD4 } from "@/public/images/dress";
 
 import { bagClip, bagCover, shoeClip, shoeCover, dressClip, dressCover } from "@/public/video";
 

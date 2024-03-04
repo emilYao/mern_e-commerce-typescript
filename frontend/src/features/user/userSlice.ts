@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../app/store'
+import { productReturnType } from '@/types/type';
+import { cartType } from '../cart/cartSlice';
 
 
 export interface userType {
@@ -10,6 +12,7 @@ export interface userType {
         phoneNumber:string;
         email:string;
     },
+    cart:cartType,
     goToverify: Boolean;
     closeCreateUser: boolean;
     closeLoginUser:boolean;
@@ -24,6 +27,12 @@ user:{
     phoneNumber:"",
     email:"",
 },
+cart:{
+  selectedItems:[],
+  totalQTY:0,
+  totalPrice: 0
+    }
+,
 goToverify: false,
 closeCreateUser: true,
 closeLoginUser:true,
@@ -64,7 +73,7 @@ export const userSlice = createSlice({
 export const { addUserProfile,goToVerify, openCreateUser,closeCreateUser, setUserLogIn,closeLoginUser, openLoginUser } = userSlice.actions
 
 
-export const selectCount = (state: RootState) => state.user
+export const selectUser = (state: RootState) => state.user
 
 export default userSlice.reducer
 

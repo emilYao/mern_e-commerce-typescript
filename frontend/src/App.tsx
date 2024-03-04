@@ -14,7 +14,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout/>}>
           <Route index  element={<Home/>}/>
-          <Route path="product/:id" element={<ProductDetail/>}/>
+          <Route path="product/:category" element={<div>dkdk</div>}/>
+          <Route path="product/:category/:id" element={<ProductDetail/>}/>
         </Route>
 
         {/* don't forget to make it protected route */}
