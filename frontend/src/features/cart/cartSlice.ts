@@ -1,12 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../app/store'
 import { productReturnType } from '@/types/type'
-import { useAppSelector } from '@/app/hooks';
 import { ToastContainer, toast } from "react-toastify";
 
-let cart = ():cartType=> {
-    return useAppSelector((state)=>state.user.cart);
-}
+
 export interface selectedItemType{
     item: productReturnType,
     QTY: number,
@@ -18,33 +15,48 @@ export interface cartType {
     totalPrice: number
       }
 
-// const initialState = 
+export const initialCartState ={      
+    selectedItems:[],
+    totalQTY:0,
+    totalPrice: 0    
+    } as cartType
+    
     
 export const cartSlice = createSlice({
     name: 'cart',
-   
-    initialState:{
-        selectedItems:cart().selectedItems,
-        totalQTY: cart().totalQTY,
-        totalPrice : cart().totalPrice,
-     
-    } as cartType,
+    initialState:initialCartState,
     reducers: {
         addToCart: (state, action:PayloadAction<productReturnType>)=>{  
-                     
-            const item = state.selectedItems.find((item)=>{
-                return item.item.id === action.payload.id
-            })
-            if (item){
+             if (Number(action.payload.stockQuantity) > 0){
+                const item = state.selectedItems.find((item)=>{
+                    return item.item.id === action.payload.id
+                })
+    
+                if (item){
                 item.QTY +=1
-                // toast.success(`${item.item.category} quantity increase`)
-                
-            }else{
-               let new_item = {item:action.payload, QTY: 1, price:Number(action.payload.price)};
-                state.selectedItems.push(new_item);
-                // toast.success(`New ${new_item.item.category} added to cart` )
-                
-            }
+                console.log(item.item.stockQuantity)
+
+                let stock = Number(item?.item.category) -1
+                  item.item.stockQuantity = stock.toString();
+                    toast.success(`${item.item.category} quantity increase`)
+                    
+                }else{
+                   let new_item = {item:action.payload, QTY: 1, price:Number(action.payload.price)};
+                   console.log(new_item.item.stockQuantity)
+
+                    let stock = Number(new_item.item.category) -1
+                    new_item.item.stockQuantity = stock.toString();
+                    state.selectedItems.push(new_item);
+    
+                    toast.success(`New ${new_item.item.category} added to cart` )     
+                }
+             
+             }  
+            else{
+                // toast.dan(`New ${new_item.item.category} added to cart` )
+                toast.info("Sorry we are out of stock")
+            }    
+           
             // console.log(state)
             // let newItem = JSON.stringify(state.selectedItems);
             // localStorage.setItem("cartItems", newItem)      

@@ -1,7 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction,createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState } from '../../app/store'
 import { productReturnType } from '@/types/type';
-import { cartType } from '../cart/cartSlice';
 
 
 export interface userType {
@@ -12,7 +11,6 @@ export interface userType {
         phoneNumber:string;
         email:string;
     },
-    cart:cartType,
     goToverify: Boolean;
     closeCreateUser: boolean;
     closeLoginUser:boolean;
@@ -27,18 +25,18 @@ user:{
     phoneNumber:"",
     email:"",
 },
-cart:{
-  selectedItems:[],
-  totalQTY:0,
-  totalPrice: 0
-    }
-,
 goToverify: false,
 closeCreateUser: true,
 closeLoginUser:true,
 userLogIn: false,
 } as userType
-    
+
+
+export const xyz = createAsyncThunk("user/setCart", async(id, ThunkAPI)=>{
+  console.log(ThunkAPI.getState)
+  return ThunkAPI.getState()
+})
+
 export const userSlice = createSlice({
     name: 'user',
    
@@ -66,10 +64,14 @@ export const userSlice = createSlice({
       },
       setUserLogIn: (state,action:PayloadAction<boolean>)=>{
         state.userLogIn = action.payload;
-      }
+      },
+
+
     }
+  
   })    
 
+  
 export const { addUserProfile,goToVerify, openCreateUser,closeCreateUser, setUserLogIn,closeLoginUser, openLoginUser } = userSlice.actions
 
 
