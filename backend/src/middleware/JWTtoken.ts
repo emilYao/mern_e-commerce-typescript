@@ -23,7 +23,7 @@ export const asignToken = (newUser:UserDataType, secret:string)=>{
 
 export const verifyToken =(req:Request, res:Response, next:NextFunction)=>{
     
-    const token = req.cookies["auth_token"];
+    const token = req.header("auth_token");
     
     if (!token){
         return res.status(404).json({message:"unAuthorized"});

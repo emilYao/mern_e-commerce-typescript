@@ -34,7 +34,7 @@ export default function Product({ items }: props) {
         modules={[EffectCreative]}
         className="mySwiper  top-0 left-0 w-[100%] h-[7rem] md:h-[16rem] xl:h-[19rem] 3xl:h-[30rem] xl:w-[15rem]"
       >
-        {items.map((item, index) => {
+        {items?.map((item, index) => {
           return (
             <SwiperSlide key={index} className="grid gap-0  grid-rows-12 bg-white hover:scale-105 cursor-pointer h-[100%] " onClick={()=>navigate(`product/${item.category}`)}>
               <div className="row-span-8 w-[100%] h-[80%] relative">

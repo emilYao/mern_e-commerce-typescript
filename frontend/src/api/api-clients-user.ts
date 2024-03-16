@@ -11,12 +11,13 @@ export const  registerUser = async (formData:UserInputType)=>{
             "Content-Type":"Application/json"
         },
     }).then((data)=>{
-        // console.log(data.data.message.json())
+        console.log(data)
         return data
     }).catch(error=>{
+        console.log(error)
+
         throw error.response.data.message
     })
-
 }
 
 export const  login = async (formData:{email:string; password:string})=>{

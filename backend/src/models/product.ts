@@ -1,7 +1,7 @@
 import {model, Schema} from "mongoose"
 import { ProductDataType } from "../../shared/Type"
 
-const categoryValues=["shoe","bag","cufflink","fabric"]
+const categoryValues=["shoe","bag","dress"]
 
 const productSchema = new Schema<ProductDataType>({
     name:{

@@ -32,10 +32,6 @@ userLogIn: false,
 } as userType
 
 
-export const xyz = createAsyncThunk("user/setCart", async(id, ThunkAPI)=>{
-  console.log(ThunkAPI.getState)
-  return ThunkAPI.getState()
-})
 
 export const userSlice = createSlice({
     name: 'user',

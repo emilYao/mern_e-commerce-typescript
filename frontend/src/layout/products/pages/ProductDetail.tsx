@@ -4,16 +4,52 @@ import { useLocation } from "react-router-dom";
 import Items from "@/components/layout/sales/Items";
 import { addToCart } from "@/features/cart/cartSlice";
 import { useAppDispatch } from "@/app/hooks";
-
+import { useAddProductToCartMutation , useGetProductsQuery} from "@/features/server/productSliceApi";
+import { useEffect,useCallback, useState, useMemo } from "react";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { toast } from "react-toastify";
 
 const ProductDetail = () => {
   const dispatch = useAppDispatch();
-
-  const {
+  const [ updatePost, { isLoading: isUpdating,error },  isSuccess, reset] = useAddProductToCartMutation()
+  const { data:posts ,currentData, isFetching,isLoading:queryLoading,} = useGetProductsQuery(undefined, {
+    pollingInterval: 300,
+    // skipPollingIfUnfocused: true,
+  })
+ 
+  let {
     item,
     items,
-  }: { item: productReturnType; items: productReturnType[] } =
-    useLocation().state;
+  }: { item: productReturnType; items: productReturnType[] } = useLocation().state;
+
+ useEffect(()=>{
+    if (error){
+      let errors = error as FetchBaseQueryError
+      
+      if (errors.status == 404){
+        toast.error("Please you need to login first")
+      }
+      else if (errors.status == 403){
+        toast.info("Product out of stock")
+      }
+      else {
+        toast.error("Sorry something went wrong")
+      }  
+    }
+  },[error])
+
+  let product =posts?.find((value:productReturnType)=>{
+    return value._id == item._id;
+  }) as productReturnType
+ 
+
+  const onUpDate = async(id:string)=>{ 
+      return (
+        await updatePost(id).unwrap()
+      )   
+  }
+ 
+
 
   return (
     <div className=" container 3xl:px-[18rem]">
@@ -27,9 +63,10 @@ const ProductDetail = () => {
                     key={index}
                     className="w-[3rem]  h-[3rem] xl:w-[5rem] xl:h-[5rem] md:w-[4rem] md:h-[4rem]  bg-white"
                   >
+                    
                     <img
                       src={image}
-                      alt={item.id}
+                      alt={item._id}
                       className="w-[3rem] h-[3.3rem]  md:w-[4rem] md:h-[4rem] xl:w-[5rem] xl:h-[5rem]"
                     />
                   </div>
@@ -64,13 +101,13 @@ const ProductDetail = () => {
               Price : <span className="font-bold">GH {item.price}</span>
             </p>
             <p className="text-green-500 ">
-              Stock : <span className="font-bold">{item.stockQuantity}</span>
+              Stock : <span className="font-bold">{product?.stockQuantity }</span>
             </p>
             <div className="xl:flex xl:gap-[1rem]">
               <Button
                 type="button"
                 className="text-[10px] xl:text-[12px] h-[2rem] xl:h-[2.2rem] w-[4.8rem] xl:w-[5rem] scale-95 xl:scale-100 3xl:h-[3rem] 3xl:w-[7rem] 3xl:text-[1rem] text-slate-950 font-semibold xl:px-[7px] bg-yellow-300 hover:bg-yellow-200 hover:text-slate-800"
-                onClick={()=>dispatch(addToCart(item))}
+                onClick={()=>{onUpDate(item._id)}}
               >
                 Add To Cart
               </Button>

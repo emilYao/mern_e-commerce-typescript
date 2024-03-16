@@ -20,7 +20,7 @@ function App() {
 
         {/* don't forget to make it protected route */}
         <Route path="/admin-dasboard" element={<DashboardLayout/>}>
-          <Route path="add-product" element={<AddProduct/>}/>
+          <Route index path="add-product" element={<AddProduct/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

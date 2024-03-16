@@ -1,7 +1,16 @@
-
-
+export interface userCart{
+    cart:{
+        items:{
+            productId:string,
+            QTY: number,
+            price: number
+        }[],
+        totalQTY: number,
+        totalPrice:number
+    }
+}
 export interface productReturnType {
-    id: string,
+    _id: string,
     name:string,
     description:string
     price: string,
@@ -9,5 +18,9 @@ export interface productReturnType {
     brand: string,
     stockQuantity: string,
     images: string[],
+    videos:string[],
     rating: string,
+    createdAt:Date,
+    updatedAt:Date,
+    
 }

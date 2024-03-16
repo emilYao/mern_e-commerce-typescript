@@ -152,7 +152,7 @@ export const verifyPersonality = async (req:Request, res:Response)=>{
         const token = asignToken(userExit, process.env.USER_SECRET as string);
 
         res.cookie("auth_token",token,{
-            httpOnly:true,
+            // httpOnly:true,
             secure: process.env.NODE_ENV == "production",
             maxAge:86400000
         })
@@ -194,6 +194,20 @@ export const resendVerifyCode = async (req:Request, res:Response)=>{
         }catch(error){
         console.log(error);
         return res.status(500).json({message:"Sorry an error occured"});
+    }
+}
+
+export const getUserCart = async (req:Request, res:Response)=>{
+    try{
+        const findUser = await User.findOne({_id:req.userId})
+        if (!findUser){
+            return res.status(404).send("Please login first")
+        }
+        return res.status(200).json({
+            cart: findUser.cart
+        })
+    }catch(error){
+        return res.status(500).send("Sorry something went wrong")
     }
 }
 

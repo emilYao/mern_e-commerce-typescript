@@ -41,9 +41,9 @@ export default function Items({title, items,rows, isRelated}:props) {
       modules={[Grid, Pagination]}
       className={` mySwiper  h-[15rem] md:h-[80%] xl:h-[80%] xl:w-[62rem] 3xl:w-[91rem] w-screen  px-[1rem] mx-[auto] ${isRelated && 'xl:w-[100%] 3xl:w-[100%]'}` }
     >
-             {items.map((item, index) => {
+             {items?.map((item, index) => {
         return (
-          <SwiperSlide key={index} onClick={()=>navigate(`/product/${item.category}/${item.id}`,{
+          <SwiperSlide key={index} onClick={()=>navigate(`/product/${item.category}/${item._id}`,{
             state:{
               item,
               items

@@ -31,7 +31,34 @@ const userSchema = new Schema<UserDataType, Model<UserDataType>>({
     verifyCode:{type:String, required:true},
     numberOfVerifyCode: {type:Number, default:0},
     verfiyCodeExpireIn:Date,
-    isVerifyCode: {type:Boolean, default:false}, 
+    isVerifyCode: {type:Boolean, default:false},
+    cart:{
+        items:[{
+            productId:{
+                type: Schema.Types.ObjectId,
+                ref:'Product'
+            },
+            name:String,
+            rating:Number,
+            images:[String],
+            QTY: {
+                type:Number,
+                default:0
+            },
+            price:{
+                type:Number,
+                default: 0
+            }
+        }],
+        totalQTY:{
+            type:Number,
+            default:0
+        },
+        totalPrice:{
+            type:Number,
+            default:0
+        }
+    } 
 },{
     timestamps:true
 })

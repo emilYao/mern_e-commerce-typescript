@@ -12,8 +12,21 @@ export interface UserDataType extends Document {
     verifyCode: String;
     verfiyCodeExpireIn: Date;
     isVerifyCode :Boolean;
-    numberOfVerifyCode:number,
+    numberOfVerifyCode:number;
     comparePassword:(password:String)=>Boolean;
+    cart:{
+        items:{
+            productId:Types.ObjectId,
+            name:string,
+            rating:number,
+            images:string[],
+            QTY: number,
+            price: number
+        }[],
+        totalQTY: number,
+        totalPrice:number
+    }
+
 }
 
 enum categoryValues{
@@ -26,7 +39,7 @@ export interface ProductDataType extends Document{
     name: string;
     description: string;
     price: number;
-    category: "shoe"| "bag"|"cufflink"|"fabric";
+    category: "shoe"| "bag"|"dress";
     brand: string;
     stockQuantity: number;
     images: string[];

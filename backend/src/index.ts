@@ -18,7 +18,8 @@ cloudinary.config({
 
   
 
-app.use(Cors({origin: process.env.FRONTEND_URL, credentials:true}));
+app.use(Cors({origin:true, credentials:true,methods:['GET', 'PUT', 'POST','PATCH']}));
+app.options("*", Cors())
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser())
@@ -36,7 +37,6 @@ app.use((error:Error, req:Request, res:Response, next:NextFunction)=>{
     console.log(error);
     res.status(500).json({message: "Sorry something went wrong"});
 })
-
 
   
 mongoose.connect(process.env.DB_URL as string).then(()=>{

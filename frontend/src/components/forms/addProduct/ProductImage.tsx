@@ -2,8 +2,16 @@ import { useFormContext } from "react-hook-form";
 import { useState } from "react";
 import { ProductInputType } from "@/components/pages/admin/AddProduct";
 import { useEffect } from "react";
+import { setProductSave } from "@/features/admin/adminSlice";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
-export default function ProductImage() {
+interface props{
+  clearImage: boolean,
+
+}
+export default function ProductImage({clearImage}:props) {
+  const dispatch = useAppDispatch();
+    const productSave = useAppSelector(state=>state.admin.productSave)
     const [images, setImages] = useState([]);
   const {
     register,
@@ -12,11 +20,11 @@ export default function ProductImage() {
     watch,
     formState: { errors },
   } = useFormContext<ProductInputType>();
-
+ 
   register("images",{
     validate: {    
       less : (image)=>( image.length ) > 0 || "At least one image is required",
-      greater: (image)=>( image.length) < 5 || "Total number of images can't be more than 5"
+      greater: (image)=>( image.length) < 10 || "Total number of images can't be more than 5"
     },
     
   })
@@ -29,11 +37,19 @@ export default function ProductImage() {
         return url !== imageUrl
     })
     setImages(newImage)
+
   }
 
   useEffect(()=>{
     setValue("images", images)
     setValue("imageFile", null)
+    console.log(productSave)
+    if (productSave == true){
+      setImages([]);
+    dispatch(setProductSave(false))
+
+    }  
+  
   }, [images])
 
   const exitingImage = watch("imageFile");

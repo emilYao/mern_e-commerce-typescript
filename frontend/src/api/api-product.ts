@@ -12,7 +12,7 @@ method:"POST"
       // console.log(data.data.message.json())
       return data
   }).catch(error=>{
-      throw error.response.data.message
+      throw error.response
   })
 
 }

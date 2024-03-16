@@ -10,14 +10,12 @@ import Footer from "@/components/layout/footer/Footer";
 import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-
 export default function Layout() {
   const location = useLocation().pathname;
-
+  
   const [navbg, setNavbg] = useState(false);
   const [getHeight, setHeight] = useState(window.scrollY);
 
- 
   const checkScrollHight = () => {
     if (window.scrollY > 40) {
       setNavbg(true);
@@ -25,19 +23,26 @@ export default function Layout() {
       setNavbg(false);
     }
   };
+ 
+
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
-      return checkScrollHight()
+      return checkScrollHight();
     });
 
-    return ()=>checkScrollHight()
+    return () => checkScrollHight();
   });
-
 
   return (
     <div className="relative  min-h-screen">
-      <div className= { `${location === "/" ?"opacity-[0.5] clip-path h-[15rem] relative  3xl:h-[25rem] md:h-[28rem]" : "h-[5rem]"}`}>
+      <div
+        className={`${
+          location === "/"
+            ? "opacity-[0.5] clip-path h-[15rem] relative  3xl:h-[25rem] md:h-[28rem]"
+            : "h-[5rem]"
+        }`}
+      >
         <Header />
         {location === "/" && (
           <>
@@ -50,11 +55,11 @@ export default function Layout() {
 
       <ToastContainer position="top-center" className="z-100" />
 
- 
-        <Outlet/>
-      <Register />
-      <Login />
-
+      <Outlet />
+    
+        <Register />
+        <Login />
+     
 
       <Footer value={footerAPI} />
     </div>
