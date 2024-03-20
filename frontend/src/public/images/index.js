@@ -1,6 +1,6 @@
 
 
-export {default as logo} from './logo.png';
+export {default as logo} from './nike.png';
 
 export {default as clothe_1} from "./clothes/clothe_1.jpeg";
 export {default as clothe_2} from "./clothes/clothe_2.jpg";

@@ -6,6 +6,7 @@ import DashboardLayout from "./layout/admin/DashboardLayout";
 import AddProduct from "./components/pages/admin/AddProduct";
 import Home from "./layout/products/pages/Home";
 import ProductDetail from "./layout/products/pages/ProductDetail";
+import Cart from "./layout/products/pages/Cart";
 function App() {
 
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route index  element={<Home/>}/>
           <Route path="product/:category" element={<div>dkdk</div>}/>
           <Route path="product/:category/:id" element={<ProductDetail/>}/>
+          <Route path="cart"  element={<Cart/>}/>
         </Route>
 
         {/* don't forget to make it protected route */}

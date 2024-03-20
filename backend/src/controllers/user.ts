@@ -16,7 +16,7 @@ export const register= async (req:Request, res:Response)=>{
             return res.status(404).json({message:errorField})
         }
         // check if the user already exit 
-        let userExit = await User.findOne({email}) || await User.findOne({phoneNumber});
+        let userExit = await User.findOne({email});
 
         if (userExit){
             return res.status(404).json({message:"User already exit"})
@@ -205,6 +205,23 @@ export const getUserCart = async (req:Request, res:Response)=>{
         }
         return res.status(200).json({
             cart: findUser.cart
+        })
+    }catch(error){
+        return res.status(500).send("Sorry something went wrong")
+    }
+}
+
+export const getUserInfo = async (req:Request, res:Response)=>{
+    try{
+        const findUser = await User.findOne({_id:req.userId})
+        if (!findUser){
+            return res.status(404).send("Please login first")
+        }
+        return res.status(200).json({
+            firstName: findUser.firstName,
+            lastName: findUser.lastName,
+            email: findUser.email,
+            phoneNumber: findUser.phoneNumber
         })
     }catch(error){
         return res.status(500).send("Sorry something went wrong")

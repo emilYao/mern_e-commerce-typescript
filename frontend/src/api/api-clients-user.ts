@@ -5,8 +5,7 @@ import axios from 'axios';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 
 export const  registerUser = async (formData:UserInputType)=>{
-      return await axios.post(`http://localhost:9000/api/auth/register`,formData, {
-        withCredentials:true,
+      return await axios.post(`http://localhost:9000/api/user/auth/register`,formData, {
         headers:{
             "Content-Type":"Application/json"
         },
@@ -22,7 +21,6 @@ export const  registerUser = async (formData:UserInputType)=>{
 
 export const  login = async (formData:{email:string; password:string})=>{
     return await axios.patch(`http://localhost:9000/api/user/auth/login`,formData, {
-      withCredentials:true,
       headers:{
           "Content-Type":"Application/json"
       },

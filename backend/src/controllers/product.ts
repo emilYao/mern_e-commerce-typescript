@@ -73,7 +73,7 @@ export const addProductToCart = async (req:Request, res:Response)=>{
             upDateProduct.stockQuantity = upDateProduct.stockQuantity -1
 
             const isProductInCart = findUser.cart.items.find((item)=>{
-                return item.productId === id;
+                return item.productId == id;
             })
 
             if (isProductInCart){
@@ -99,6 +99,7 @@ export const addProductToCart = async (req:Request, res:Response)=>{
         }
         return res.status(200).json(upDateProduct)
     }catch(error){
+        console.log(error)
         return res.status(500).json("Sorry something went wrong")
     }
 }
@@ -115,10 +116,10 @@ export const reduceProductFromCart = async (req:Request, res:Response)=>{
         const upDateProduct =await  Product.findOne({_id:req.body.id} ) as ProductDataType  
       
             const isProductInCart = findUser.cart.items.find((item)=>{
-                return item.productId === id;
+                return item.productId == id;
             })
 
-            if (isProductInCart && isProductInCart.QTY !== 0){
+            if (isProductInCart && isProductInCart.QTY >=2){
                 isProductInCart.QTY -= 1;
                 isProductInCart.price -= upDateProduct.price;
                 findUser.cart.totalPrice -= upDateProduct.price;
@@ -126,7 +127,7 @@ export const reduceProductFromCart = async (req:Request, res:Response)=>{
                 upDateProduct.stockQuantity += 1;
             }else{
                 findUser.cart.items = findUser.cart.items.filter((item)=>{
-                    return item.productId !== upDateProduct._id          
+                    return item.productId != upDateProduct._id          
                 })
             }
             
@@ -135,7 +136,7 @@ export const reduceProductFromCart = async (req:Request, res:Response)=>{
             await upDateProduct.save();
 
         
-        return res.status(200).json(upDateProduct)
+        return res.status(200).json("product updated")
     }catch(error){
         return res.status(500).json("Sorry something went wrong")
     }
@@ -143,51 +144,55 @@ export const reduceProductFromCart = async (req:Request, res:Response)=>{
 
 export const removeProductFromCart = async (req:Request, res:Response)=>{
     const {id} = req.body;
-
+  
     try{
-        const findUser = await User.findOne({_id:req.userId})
+        let findUser = await User.findOne({_id:req.userId})
         if (!findUser){
             return res.status(404).json({message:"Please login first"})
         }
 
-        const upDateProduct =await  Product.findOne({_id:req.body.id} ) as ProductDataType  
+        let upDateProduct =await  Product.findOne({_id:req.body.id} ) as ProductDataType  
       
             const isProductInCart = findUser.cart.items.find((item)=>{
-                return item.productId === id;
+                return item.productId == id;
             })
 
-            if (isProductInCart && isProductInCart.QTY !== 0){
+            if (isProductInCart){
                 findUser.cart.totalPrice -= isProductInCart.price;
                 findUser.cart.totalQTY -= isProductInCart.QTY;
                 upDateProduct.stockQuantity += isProductInCart.QTY;
-
+                findUser.cart.items = findUser.cart.items.filter((item)=>{
+                    return item.productId != id          
+                })
+                // console.log(findUser.cart.items)
             }
-            findUser.cart.items = findUser.cart.items.filter((item)=>{
-                return item.productId !== upDateProduct._id          
-            })
+           
+           
+            
+       
             
             await findUser.save();
             await upDateProduct.save();
       
-        return res.status(200).json(upDateProduct)
+        return res.status(200).json("product remove")
     }catch(error){
         return res.status(500).json("Sorry something went wrong")
     }
 }
 
 export const clearCart = async (req:Request, res:Response)=>{
-    const {id} = req.body;
-
     try{
         const findUser = await User.findOne({_id:req.userId})
         if (!findUser){
             return res.status(404).json({message:"Please login first"})
         }
 
-        const upDateProduct =await  Product.findOne({_id:id} ) as ProductDataType  
-    
-            upDateProduct.stockQuantity += findUser.cart.totalQTY;
-            
+        findUser.cart.items.forEach(async(item)=>{
+            const upDateProduct = await Product.findOne({_id: item.productId}) as ProductDataType
+            upDateProduct.stockQuantity += item.QTY;
+            await upDateProduct.save()
+        })
+                    
             findUser.cart = {
                 items:[],
                 totalPrice:0,
@@ -195,9 +200,9 @@ export const clearCart = async (req:Request, res:Response)=>{
             }
             
             await findUser.save();
-            await upDateProduct.save();
+          
       
-        return res.status(200).json(upDateProduct)
+        return res.status(200).send("product cleared")
     }catch(error){
         return res.status(500).json("Sorry something went wrong")
     }

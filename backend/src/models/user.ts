@@ -19,8 +19,7 @@ const userSchema = new Schema<UserDataType, Model<UserDataType>>({
     },
     phoneNumber:{
         type:String,
-        required:true,
-        unique:true
+        required:true
     },
     role:{
         type:String,
@@ -28,7 +27,7 @@ const userSchema = new Schema<UserDataType, Model<UserDataType>>({
     }
     ,
     password:{type:String, required:true},
-    verifyCode:{type:String, required:true},
+    verifyCode:{type:String},
     numberOfVerifyCode: {type:Number, default:0},
     verfiyCodeExpireIn:Date,
     isVerifyCode: {type:Boolean, default:false},

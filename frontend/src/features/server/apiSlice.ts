@@ -26,7 +26,7 @@ export const apis = createApi({
   refetchOnMountOrArgChange: true,
   refetchOnReconnect:true,
 
-  tagTypes: ['Post', 'Cart'],
+  tagTypes: ['Post', 'Cart', 'User', 'Admin'],
   endpoints: () => ({
     
   }),

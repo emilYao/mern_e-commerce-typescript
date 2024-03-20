@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { register as userRegistration, verifyPersonality,resendVerifyCode,logIn, logOut, getUserCart } from "../controllers/user";
+import { register as userRegistration, verifyPersonality,resendVerifyCode,logIn, logOut, getUserCart, getUserInfo } from "../controllers/user";
 import { isEmail, isFirstName, isLastName, isPassword,isRole,isVerifyOTP } from "../middleware/validators";
 
 
@@ -14,4 +14,5 @@ router.patch("/auth/reSendCode", resendVerifyCode)
 router.patch("/auth/login", [isEmail, isPassword],logIn)
 router.post("/auth/logout", logOut)
 router.get("/getUserCart", verifyToken,getUserCart)
+router.get("/getUserInfo", verifyToken, getUserInfo)
 export default router;

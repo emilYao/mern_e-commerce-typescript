@@ -3,6 +3,7 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import userRoutes from "./routes/user";
 import productRoutes from "./routes/product"
+import adminRoutes from "./routes/admin"
 import Cors from "cors";
 import { sendMail } from "./utils/nodeMailer";
 const app = express();
@@ -18,8 +19,8 @@ cloudinary.config({
 
   
 
-app.use(Cors({origin:true, credentials:true,methods:['GET', 'PUT', 'POST','PATCH']}));
-app.options("*", Cors())
+app.use(Cors({origin:process.env.FRONTEND_URL, credentials:true,methods:['GET', 'PUT', 'POST','PATCH']}));
+
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser())
@@ -29,9 +30,9 @@ const PORT = process.env.NODE_ENV === "production" ? process.env.PORT as String 
 
 
 // define routes
+app.use("/api/admin",adminRoutes )
 app.use("/api/product", productRoutes)
 app.use("/api/user", userRoutes);
-
 //genaral error
 app.use((error:Error, req:Request, res:Response, next:NextFunction)=>{
     console.log(error);

@@ -1,7 +1,7 @@
 
 import { apis } from './apiSlice'
-import { productReturnType, userCart } from '@/types/type'
-
+import { productReturnType, userCart, userInfo } from '@/types/type'
+ 
 const userApi = apis.injectEndpoints({
   endpoints(builder) {
     return {
@@ -9,10 +9,15 @@ const userApi = apis.injectEndpoints({
         query: () => 'user/getUserCart',
         providesTags: ['Cart']
       }),
+
+      getUserInfo:builder.query<userInfo, void>({
+        query: () => 'user/getUserInfo',
+        providesTags: ['User']
+      }),
     
     }
   },
 
   overrideExisting: false,
 })
-export const { useGetUserCartQuery } = userApi
+export const { useGetUserCartQuery, useGetUserInfoQuery } = userApi

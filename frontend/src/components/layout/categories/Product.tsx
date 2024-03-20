@@ -5,6 +5,9 @@ import "swiper/css";
 import "swiper/css/effect-creative";
 import TruncateMarkup from "react-truncate-markup";
 import { useNavigate } from "react-router-dom";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
 interface props {
   items: productReturnType[];
 }
@@ -13,6 +16,11 @@ export default function Product({ items }: props) {
     const navigate = useNavigate();
   return (
     <div>
+
+    {
+      !items && 
+      <Skeleton count={1} className="h-[80%]"/>
+    }
       <Swiper
         loop={true}
         // effect="creative"

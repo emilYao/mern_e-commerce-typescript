@@ -9,6 +9,8 @@ import "swiper/css/pagination";
 import TruncateMarkup from "react-truncate-markup";
 
 import { Grid, Pagination } from "swiper/modules";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 interface props{
@@ -25,7 +27,10 @@ export default function Items({title, items,rows, isRelated}:props) {
   return (
     <div className={!isRelated ? `bg-white  drop-shadow-[5px_5px_5px_rgba(0,0,0,0.2)] h-[17rem] md:h-[22rem] xl:h-[25rem] 3xl:h-[38rem] 3xl:w-[70%] xl:w-[80%] mx-[auto]` : `xl:h-[100%]  h-[10rem] md:h-[13rem]`}>
     <p className={`font-bold text-slate-600 py-1 px-[1rem] 3xl:text-[2rem] xl:py-[1rem] xl:ml-[8rem] 3xl:ml-[14rem] ${isRelated && "xl:ml-[0rem] 3xl:ml-[0rem]"}`}>{title}</p>
-
+    {
+      !items && 
+      <Skeleton count={1} className="h-[80%]"/>
+    }
     <Swiper
       slidesPerView={isRelated ?5 : 3}
       grid={{
@@ -43,6 +48,7 @@ export default function Items({title, items,rows, isRelated}:props) {
     >
              {items?.map((item, index) => {
         return (
+          
           <SwiperSlide key={index} onClick={()=>navigate(`/product/${item.category}/${item._id}`,{
             state:{
               item,
@@ -56,6 +62,9 @@ export default function Items({title, items,rows, isRelated}:props) {
                 alt=""
                 className={!isRelated ?  " h-[100%] w-[100%]  object-fill" : "md:h-[6rem] xl:h-[8rem] md:w-[100%]"}
               />
+              {
+                !item.images[0]  && <Skeleton count={10} />
+              }
               <span className="top-[0.2rem] 3xl:text-[16px] xl:text-[10px] left-[0.5rem] drop-shadow-md shadow-md py-[1px] px-1 rounded-full text-[5px] bg-yellow-300 text-white absolute">
                 +{item.rating}
               </span>
