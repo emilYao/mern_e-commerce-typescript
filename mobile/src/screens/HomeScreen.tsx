@@ -13,6 +13,7 @@ import video3 from "./../../assets/video/v3.webm"
 import { useGetProductsQuery} from "../app/features/api/productSliceApi"
 import Category from '../components/home/categories/Category';
 import Product from '../components/home/categories/Product';
+import PopularSales from '../components/home/categories/PopularSales';
 
 const HomeScreen = () => {
       const [searchValue, setSearchValue] = useState("");
@@ -66,7 +67,7 @@ const HomeScreen = () => {
         <HeroVideo/>
         <Text className="h-[50]"></Text>
        <Category/>
-        
+       <PopularSales/> 
 
     </ScrollView>
     </KeyboardAvoidingView>

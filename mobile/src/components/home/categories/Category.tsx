@@ -21,14 +21,14 @@ export default function Category() {
     return value.category == "bag"
   })
   
-console.log(isSuccess)
+
 
   return (
     <>
         {
       isSuccess && 
       (
-        <View className="flex-1 flex-row h-[150] top-[10]" >
+        <View className="flex-1 flex-row h-[160] " >
         
         <Product items={shoe as productReturnType[]}/>
         <Product items={bags as productReturnType[]}/>

@@ -31,10 +31,6 @@ export default function Product({ items }: props) {
        }}
         className="my-[1]"
         >
-
-      
-        
-
      <Image  style={{ width:100, height:100}} source={{uri:item.images[0]}}
       className="border-t-md "
      />
@@ -47,16 +43,13 @@ export default function Product({ items }: props) {
       style={{fontSize:8, paddingHorizontal:5}}>
         {item.name}
       </Text>
-      <Text className="mt-[1] ml-[2]">
-                  <Text className=" rouned-md bg-yellow-300 text-slate-900 "
-                  style={{
-                    fontSize:11,
-                    padding:10,
-                
-                  }}
-                  >
-                    GH {item.price}
-                  </Text>
+      <Text 
+      style={{
+        fontSize:11,
+        borderRadius:2
+      }}
+      className="mt-[1] ml-[5]  w-[50] text-center bg-yellow-300 text-slate-900 ">
+                  GH {item.price}
       </Text>
     </View>
     );
