@@ -1,18 +1,24 @@
 import { View, Text,  ScrollView,Dimensions, TextInput, KeyboardAvoidingView,Platform } from 'react-native'
 import React, { useState } from 'react'
 
-import ClipPathComponent from '../components/Clippath';
-import HeroSwipper from '../components/HeroSwipper';
+import ClipPathComponent from '../components/home/Clippath';
+import HeroSwipper from '../components/home/HeroSwipper';
 import EvilIcons from "react-native-vector-icons/EvilIcons"
-import HeroVideo, { HeroVideos } from '../components/HeroVideo';
+import HeroVideo, { HeroVideos } from '../components/home/HeroVideo';
 
 import vidoe1 from './../../assets/video/clip.mp4'
 import video2 from "./../../assets/video/v2.webm"
 import video3 from "./../../assets/video/v3.webm"
 
+import { useGetProductsQuery} from "../app/features/api/productSliceApi"
+import Category from '../components/home/categories/Category';
+import Product from '../components/home/categories/Product';
 
 const HomeScreen = () => {
       const [searchValue, setSearchValue] = useState("");
+
+      const { data, error, isLoading } =  useGetProductsQuery()
+    
   return (
     <KeyboardAvoidingView   
     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -58,7 +64,8 @@ const HomeScreen = () => {
         </View>
 
         <HeroVideo/>
-     
+        <Text className="h-[50]"></Text>
+       <Category/>
         
 
     </ScrollView>

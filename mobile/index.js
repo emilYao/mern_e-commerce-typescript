@@ -7,14 +7,20 @@ import App from './App';
 import {name as appName} from './app.json';
 import {PaperProvider} from 'react-native-paper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {store} from "./src/app/store"
+import { Provider } from 'react-redux'
 
 function Main() {
   return (
-    <PaperProvider>
-      <SafeAreaProvider>
-        <App />
-      </SafeAreaProvider>
-    </PaperProvider>
+    <Provider store={store}>
+      <PaperProvider>
+        <SafeAreaProvider>
+          
+          <App />
+        </SafeAreaProvider>
+      </PaperProvider>
+    </Provider>
+
   );
 }
 
